@@ -28,8 +28,8 @@ void init_ecran(){
 */
 void affichage_ecran_accueil(){
 	ILI9341_Fill(ILI9341_COLOR_WHITE);
-	ILI9341_Puts(68, 20,"Master Card",&Font_11x18, ILI9341_COLOR_BLACK, ILI9341_COLOR_WHITE);
-	ILI9341_DrawLine(0, 50, 1010, 50, ILI9341_COLOR_BLUE);
+	ILI9341_DrawFilledRectangle(30, 10, 210, 45, ILI9341_COLOR_BLUE);
+	ILI9341_Puts(62, 20,"Master Card",&Font_11x18, ILI9341_COLOR_WHITE, ILI9341_COLOR_BLUE);
 	ILI9341_Puts(55, 60, "Choisissez un jeu :", &Font_7x10, ILI9341_COLOR_BLACK, ILI9341_COLOR_WHITE);
 	ILI9341_DrawRectangle(10, 90, 990, 150, ILI9341_COLOR_BLACK);
 	ILI9341_Puts(80, 115,"President", &Font_7x10, ILI9341_COLOR_BLACK, ILI9341_COLOR_WHITE);
@@ -43,11 +43,35 @@ void affichage_ecran_accueil(){
 /*
  * @brief	affiche l'écran permettant de valider le choix du jeu
  */
-void affichage_ecran_validation(){
+void affichage_ecran_validation(uint8_t jeu){
 	ILI9341_Fill(ILI9341_COLOR_WHITE);
-	ILI9341_Puts(68, 20,"Master Card",&Font_11x18, ILI9341_COLOR_BLACK, ILI9341_COLOR_WHITE);
-	ILI9341_DrawLine(0, 50, 1010, 50, ILI9341_COLOR_BLUE);
-	ILI9341_Puts(20, 80, "Vous avez choisi le président.", &Font_7x10, ILI9341_COLOR_BLACK, ILI9341_COLOR_WHITE);
+	ILI9341_DrawFilledRectangle(30, 10, 210, 45, ILI9341_COLOR_BLUE);
+	ILI9341_Puts(62, 20,"Master Card",&Font_11x18, ILI9341_COLOR_WHITE, ILI9341_COLOR_BLUE);
+	if(jeu == 1){
+		ILI9341_Puts(20, 80, "Vous avez choisi le president.", &Font_7x10, ILI9341_COLOR_BLACK, ILI9341_COLOR_WHITE);
+	}else if(jeu == 2){
+		ILI9341_Puts(20, 80, "Vous avez choisi le kem's.", &Font_7x10, ILI9341_COLOR_BLACK, ILI9341_COLOR_WHITE);
+	}else if(jeu == 3){
+		ILI9341_Puts(20, 80, "Vous avez choisi la pyramide.", &Font_7x10, ILI9341_COLOR_BLACK, ILI9341_COLOR_WHITE);
+	}
+	ILI9341_DrawRectangle(10, 135, 990, 195, ILI9341_COLOR_BLACK);
+	ILI9341_Puts(90, 160, "VALIDER", &Font_7x10, ILI9341_COLOR_BLACK, ILI9341_COLOR_WHITE);
+	ILI9341_DrawRectangle(10, 220, 990, 280, ILI9341_COLOR_BLACK);
+	ILI9341_Puts(90, 245, "ANNULER", &Font_7x10, ILI9341_COLOR_BLACK, ILI9341_COLOR_WHITE);
+}
+
+
+/*
+ * @brief	affiche l'écran permettant de valider le choix du nombre de joueurs
+ */
+void affichage_ecran_validation_joueurs(uint8_t nb_joueurs){
+	sprintf(joueurs,"%lu", nb_joueurs);
+	ILI9341_Fill(ILI9341_COLOR_WHITE);
+	ILI9341_DrawFilledRectangle(30, 10, 210, 45, ILI9341_COLOR_BLUE);
+	ILI9341_Puts(62, 20,"Master Card",&Font_11x18, ILI9341_COLOR_WHITE, ILI9341_COLOR_BLUE);
+	ILI9341_Puts(20, 50, "Vous êtes ", &Font_7x10, ILI9341_COLOR_BLACK, ILI9341_COLOR_WHITE);
+	ILI9341_Puts(115, 65, joueurs, &Font_11x18, ILI9341_COLOR_BLACK, ILI9341_COLOR_WHITE);
+	ILI9341_Puts(97, 80, "joueurs.", &Font_7x10, ILI9341_COLOR_BLACK, ILI9341_COLOR_WHITE);
 	ILI9341_DrawRectangle(10, 135, 990, 195, ILI9341_COLOR_BLACK);
 	ILI9341_Puts(90, 160, "VALIDER", &Font_7x10, ILI9341_COLOR_BLACK, ILI9341_COLOR_WHITE);
 	ILI9341_DrawRectangle(10, 220, 990, 280, ILI9341_COLOR_BLACK);
@@ -61,8 +85,8 @@ void affichage_ecran_validation(){
 void affichage_ecran_joueurs(uint8_t nb_joueurs){
 	sprintf(joueurs,"%lu", nb_joueurs);
 	ILI9341_Fill(ILI9341_COLOR_WHITE);
-	ILI9341_Puts(68, 20,"Master Card",&Font_11x18, ILI9341_COLOR_BLACK, ILI9341_COLOR_WHITE);
-	ILI9341_DrawLine(0, 50, 1010, 50, ILI9341_COLOR_BLUE);
+	ILI9341_DrawFilledRectangle(30, 10, 210, 45, ILI9341_COLOR_BLUE);
+	ILI9341_Puts(62, 20,"Master Card",&Font_11x18, ILI9341_COLOR_WHITE, ILI9341_COLOR_BLUE);
 	ILI9341_Puts(12, 70, "Choisissez le nombre de joueurs", &Font_7x10, ILI9341_COLOR_BLACK, ILI9341_COLOR_WHITE);
 	ILI9341_DrawRectangle(10, 90, 990, 130, ILI9341_COLOR_BLACK);
 	ILI9341_Puts(115, 105,"+", &Font_11x18, ILI9341_COLOR_BLACK, ILI9341_COLOR_WHITE);
@@ -76,13 +100,39 @@ void affichage_ecran_joueurs(uint8_t nb_joueurs){
 
 
 /*
+ * @brief affiche l'écran indiquant que le jeu est en cours de préparation
+ */
+void affichage_ecran_en_cours(){
+	uint8_t compteur = 0;
+	ILI9341_Fill(ILI9341_COLOR_WHITE);
+	ILI9341_DrawFilledRectangle(30, 10, 210, 45, ILI9341_COLOR_BLUE);
+	ILI9341_Puts(62, 20,"Master Card",&Font_11x18, ILI9341_COLOR_WHITE, ILI9341_COLOR_BLUE);
+	ILI9341_Puts(75, 150,"En cours", &Font_11x18, ILI9341_COLOR_BLACK, ILI9341_COLOR_WHITE);
+	ILI9341_Puts(30, 200,"de preparation", &Font_11x18, ILI9341_COLOR_BLACK, ILI9341_COLOR_WHITE);
+	while(compteur<5){
+		ILI9341_DrawFilledRectangle(185, 200, 220, 220, ILI9341_COLOR_WHITE);
+		HAL_Delay(500);
+		ILI9341_Puts(190, 200,".", &Font_11x18, ILI9341_COLOR_BLACK, ILI9341_COLOR_WHITE);
+		HAL_Delay(500);
+		ILI9341_Puts(200, 200,".", &Font_11x18, ILI9341_COLOR_BLACK, ILI9341_COLOR_WHITE);
+		HAL_Delay(500);
+		ILI9341_Puts(210, 200,".", &Font_11x18, ILI9341_COLOR_BLACK, ILI9341_COLOR_WHITE);
+		HAL_Delay(500);
+		compteur ++;
+	}
+
+}
+
+
+/*
  * @brief	affiche l'écran indiquant que les joueurs peuvent commencer à jouer
  */
 void affichage_ecran_final(){
 	ILI9341_Fill(ILI9341_COLOR_WHITE);
-	ILI9341_Puts(68, 20,"Master Card",&Font_11x18, ILI9341_COLOR_BLACK, ILI9341_COLOR_WHITE);
-	ILI9341_DrawLine(0, 50, 1010, 50, ILI9341_COLOR_BLUE);
-	ILI9341_Puts(12, 200, "Vous pouvez commencer à jouer", &Font_7x10, ILI9341_COLOR_BLACK, ILI9341_COLOR_WHITE);
+	ILI9341_DrawFilledRectangle(30, 10, 210, 45, ILI9341_COLOR_BLUE);
+	ILI9341_Puts(62, 20,"Master Card",&Font_11x18, ILI9341_COLOR_WHITE, ILI9341_COLOR_BLUE);
+	ILI9341_Puts(60, 140, "Vous pouvez", &Font_11x18, ILI9341_COLOR_BLACK, ILI9341_COLOR_WHITE);
+	ILI9341_Puts(18, 170, "commencer a jouer !", &Font_11x18, ILI9341_COLOR_BLACK, ILI9341_COLOR_WHITE);
 }
 
 
@@ -97,13 +147,10 @@ uint8_t choix_jeu(){
 		if(XPT2046_getMedianCoordinates(&x, &y, XPT2046_COORDINATE_SCREEN_RELATIVE)){
 			if(y > 100 && y < 140){
 				choix = 1;
-				ILI9341_DrawCircle(x,y,15,ILI9341_COLOR_BLUE);
 			}else if (y > 185 && y < 205){
 				choix = 2;
-				ILI9341_DrawCircle(x,y,15,ILI9341_COLOR_RED);
 			}else if (y > 260 && y < 280){
 				choix = 3;
-				ILI9341_DrawCircle(x,y,15,ILI9341_COLOR_GREEN);
 			}
 		}
 	}
@@ -113,9 +160,9 @@ uint8_t choix_jeu(){
 
 /*
  * @brief	valide le jeu sélectionné
- * @return 	booléen qui indique si le jeu est validé (true) ou s'il ne l'est pas (false)
+ * @return 	uint8_t qui indique si les paramètres sont validés (1) ou s'ils ne le sont pas (2)
  */
-uint8_t validation_jeu(){
+uint8_t validation_param(){
 	int16_t x, y;
 	uint8_t valide;
 	if(XPT2046_getMedianCoordinates(&x, &y, XPT2046_COORDINATE_SCREEN_RELATIVE)){
@@ -139,14 +186,28 @@ uint8_t validation_jeu(){
  */
 uint8_t nombre_joueurs_president(){
 	int16_t x, y;
-	uint8_t nb_joueurs = 0;
+	_Bool valide = FALSE;
+	uint8_t nb_joueurs = 2;
+	affichage_ecran_joueurs(nb_joueurs);
+	while(!valide){
 		if(XPT2046_getMedianCoordinates(&x, &y, XPT2046_COORDINATE_SCREEN_RELATIVE)){
 			if(y > 90 && y < 130 && nb_joueurs <= 8){
+				HAL_Delay(100);
 				nb_joueurs ++;
-			}else if(y > 150 && y < 190 && nb_joueurs >= 4){
+				//IILI9341_DrawCircle(125, 210, 10, ILI9341_COLOR_WHITE);
+				sprintf(joueurs,"%lu", nb_joueurs);
+				ILI9341_Puts(115, 205, joueurs, &Font_11x18, ILI9341_COLOR_BLACK, ILI9341_COLOR_WHITE);
+			}else if(y > 150 && y < 190 && nb_joueurs >= 3){
+				HAL_Delay(100);
 				nb_joueurs --;
+				ILI9341_DrawCircle(125, 210, 10, ILI9341_COLOR_WHITE);
+				sprintf(joueurs,"%lu", nb_joueurs);
+				ILI9341_Puts(115, 205, joueurs, &Font_11x18, ILI9341_COLOR_BLACK, ILI9341_COLOR_WHITE);
+			}else if(y > 260 && y < 300){
+				valide = TRUE;
 			}
 		}
+	}
 	return nb_joueurs;
 }
 
@@ -158,14 +219,22 @@ uint8_t nombre_joueurs_president(){
 uint8_t nombre_joueurs_kems(){
 	int16_t x, y;
 	_Bool valide = FALSE;
-	uint8_t nb_joueurs = 0;
+	uint8_t nb_joueurs = 4;
 	affichage_ecran_joueurs(nb_joueurs);
 	while(!valide){
 		if(XPT2046_getMedianCoordinates(&x, &y, XPT2046_COORDINATE_SCREEN_RELATIVE)){
-			if(y > 90 && y < 130 && nb_joueurs <= 8){
+			if(y > 90 && y < 130 && nb_joueurs <= 6){
+				HAL_Delay(100);
 				nb_joueurs += 2;
-			}else if(y > 150 && y < 190 && nb_joueurs >= 4){
+				ILI9341_DrawCircle(125, 210, 10, ILI9341_COLOR_WHITE);
+				sprintf(joueurs,"%lu", nb_joueurs);
+				ILI9341_Puts(115, 205, joueurs, &Font_11x18, ILI9341_COLOR_BLACK, ILI9341_COLOR_WHITE);
+			}else if(y > 150 && y < 190 && nb_joueurs >= 6){
+				HAL_Delay(100);
 				nb_joueurs -= 2;
+				ILI9341_DrawCircle(125, 210, 10, ILI9341_COLOR_WHITE);
+				sprintf(joueurs,"%lu", nb_joueurs);
+				ILI9341_Puts(115, 205, joueurs, &Font_11x18, ILI9341_COLOR_BLACK, ILI9341_COLOR_WHITE);
 			}else if(y > 260 && y < 300){
 				valide = TRUE;
 			}

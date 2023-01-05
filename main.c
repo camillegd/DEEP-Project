@@ -60,16 +60,17 @@ int main(void)
 	//On ajoute la fonction process_ms � la liste des fonctions appel�es automatiquement chaque ms par la routine d'interruption du p�riph�rique SYSTICK
 	Systick_add_callback_function(&process_ms);
 
-	init_ecran();
+	//init_ecran();
 	//affichage_ecran_accueil();
 	//affichage_ecran_validation();
 	//affichage_ecran_joueurs(6);
 	//choix_jeu();
 	//XPT2046_demo();
+	//affichage_ecran_en_cours();
+	//affichage_ecran_final();
 
 
 
-	//state_machine();
 	while(1)	//boucle de tache de fond
 	{
 		state_machine();

@@ -10,6 +10,8 @@
 #include "moteur.h"
 #include "stm32f1_ili9341.h"
 
+
+
 /*
  * @brief 	machine à états permettant le fonctionnement du robot
  */
@@ -82,10 +84,9 @@ uint8_t selection_jeu(){
 	affichage_ecran_accueil();
 	choix = choix_jeu();
 	while(choix != 0){
-		HAL_Delay(1000);
-		affichage_ecran_validation();
+		affichage_ecran_validation(choix);
 		while(valide == 0){
-			valide = validation_jeu();
+			valide = validation_param();
 			if(valide==1){
 				return choix;
 			}else if (valide == 2){
@@ -113,6 +114,11 @@ void president(){
 void kems(){
 	uint8_t nb;
 	nb = nombre_joueurs_kems();
+	uint8_t valide = 0;
+	affichage_ecran_validation_joueurs(nb);
+	while(valide == 0){
+		valide = validation_param();
+	}
 	melange();
 	// faire toute la partie distribution avec  les moteurs
 }
@@ -130,6 +136,8 @@ void pyramide(){
  * @brief	affiche l'écran indiquant que la distribution est terminé et fait clignoter les leds deux fois
  */
 void etat_final(){
+	affichage_ecran_en_cours();
 	affichage_ecran_final();
+	HAL_Delay(1000);
 	//ajouter les leds
 }
