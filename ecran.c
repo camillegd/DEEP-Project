@@ -143,7 +143,6 @@ void affichage_ecran_final(){
 uint8_t choix_jeu(){
 	int16_t x, y;
 	uint8_t choix = 0;
-	while(choix == 0){
 		if(XPT2046_getMedianCoordinates(&x, &y, XPT2046_COORDINATE_SCREEN_RELATIVE)){
 			if(y > 100 && y < 140){
 				choix = 1;
@@ -153,7 +152,6 @@ uint8_t choix_jeu(){
 				choix = 3;
 			}
 		}
-	}
 	return choix;
 }
 

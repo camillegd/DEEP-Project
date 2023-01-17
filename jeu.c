@@ -161,10 +161,18 @@ void kems(){
 			}
 			valide = validation_param();
 			if(valide == 1){
-				state = ETAT_FINAL;
+				state_kems = MELANGE;
 			}else if(valide == 2){
 				state_kems = JOUEURS;
 			}
+			break;
+		case MELANGE :
+			// faire tourner les moteurs du mélange
+			state_kems = DISTRIBUTION;
+			break;
+		case DISTRIBUTION :
+			distribue_kems(nb);
+			state = ETAT_FINAL;
 			break;
 	}
 }

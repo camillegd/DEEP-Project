@@ -25,6 +25,8 @@ typedef enum
 	{
 		JOUEURS = 0,
 		VALIDATION,
+		MELANGE,
+		DISTRIBUTION
 	}kems_e;
 static kems_e state_kems = JOUEURS;
 
