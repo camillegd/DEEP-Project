@@ -22,6 +22,7 @@ uint8_t nombre_joueurs_president();
 uint8_t nombre_joueurs_kems();
 uint8_t choix_jeu();
 uint8_t validation_param();
+//uint8_t old_nombre_joueurs_kems();
 
 
 #endif /* ECRAN_H_ */

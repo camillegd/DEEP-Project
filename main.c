@@ -5,7 +5,9 @@
  *@author	C. Guyonnaud
  */
 
+
 #include "stm32f1xx_hal.h"
+#include "stm32f1_motorDC.h"
 #include "stm32f1_uart.h"
 #include "stm32f1_sys.h"
 #include "stm32f1_gpio.h"
@@ -13,8 +15,7 @@
 #include "systick.h"
 #include "moteur.h"
 #include "ecran.h"
-#include "state_machine.h"
-
+#include "jeu.h"
 
 
 
@@ -68,12 +69,16 @@ int main(void)
 	//XPT2046_demo();
 	//affichage_ecran_en_cours();
 	//affichage_ecran_final();
-
-
+	//BSP_GPIO_PinCfg(GPIOA, GPIO_PIN_0, GPIO_MODE_OUTPUT_PP, GPIO_NOPULL, GPIO_SPEED_FREQ_HIGH);
 
 	while(1)	//boucle de tache de fond
 	{
 		state_machine();
+		/*HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, 0);
+		HAL_Delay(10);
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, 1);*/
+		/*DEMO_MOTOR_statemachine(FALSE,'B');
+		DEMO_MOTOR_statemachine(FALSE, '+');*/
 	}
 
 
